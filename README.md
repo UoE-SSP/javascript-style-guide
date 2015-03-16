@@ -371,7 +371,7 @@
         dragonball = 'z';
 
     // bad
-    // (compare to above, and try to spot the mistake)
+    // (note that dragonball is now outwith the var statement, and could be global)
     var items = getItems(),
         goSportsTeam = true;
         dragonball = 'z';
@@ -631,7 +631,8 @@
     ```
 
   - If you're using multi-line blocks with `if` and `else`, put `else` on the same line as your
-    `if` block's closing brace.
+    `if` block's closing brace. Note that JavaScript doesn't have a built in `elseif` keyword,
+    but using `else if` performs the same functionality.
 
     ```javascript
     // bad
@@ -647,8 +648,10 @@
     if (test) {
       thing1();
       thing2();
-    } else {
+    } else if( test2 ) {
       thing3();
+    } else {
+      thing4();
     }
     ```
 
@@ -657,6 +660,10 @@
 
 
 ## Comments
+
+  - Comment prolifically. It will make it easier for others to pick up your work later on. With suitable tooling we can remove comments from production files, so don't worry about file size.
+  
+  - Use [JSDoc](http://usejsdoc.org/about-getting-started.html) to annotate your functions. This allows for consistent documentation, and will give us the option to automatically generate documentation where possible.
 
   - Use `/** ... */` for multiline comments. Include a description, specify types and values for all parameters and return values.
 
@@ -719,8 +726,6 @@
       return type;
     }
     ```
-
-  - Use [JSDoc](http://usejsdoc.org/about-getting-started.html) to annotate your functions. This allows for consistent documentation, and will give us the option to automatically generate documentation where possible.
  
   - Prefixing your comments with `FIXME` or `TODO` helps other developers quickly understand if you're pointing out a problem that needs to be revisited, or if you're suggesting a solution to the problem that needs to be implemented. These are different than regular comments because they are actionable. The actions are `FIXME -- need to figure this out` or `TODO -- need to implement`.
 
@@ -852,6 +857,24 @@
     };
 
     return obj;
+    ```
+    
+  - Ensure the indentation of your braces align properly
+  
+    ```javascript
+    // bad
+    var obj = {
+      handler: function() {
+       // ...
+    }
+    }
+    
+    // good
+    var obj = {
+      handler: function() {
+       // ...
+      }
+    }
     ```
 
 
@@ -1430,6 +1453,22 @@
     ```
 
   - Instead of jQuery's `show()` and `hide()` methods, use a `hidden` class (which exists by default in Bootstrap. Or use the `hidden` attribute if only working with modern browsers. [Evidence of jQuery slowness](http://jsperf.com/hidden-vs-hide-vs-class), [support for the hidden attribute](http://caniuse.com/#feat=hidden).
+  
+  - You can [create new HTML elements](http://api.jquery.com/jQuery/#jQuery-html-attributes) with jQuery, and doing so can be helpful when you need to attach event handlers to the new element.
+  
+    ```javascript
+    // Creates a new div element with class, a data attribute and an event handler
+    var $item = $('<div></div>', {
+      'class': 'box1',
+      'data-gbp-value': '£30',
+      on: {
+        click: function() {
+          // ...
+        }
+      }
+    });
+    $item.appendTo( 'body' );
+    ```
 
 **[^ back to top](#table-of-contents)**
 
