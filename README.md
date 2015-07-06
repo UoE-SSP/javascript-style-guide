@@ -1408,7 +1408,7 @@
     $sidebar.find('ul').html();
     ```
 
-  - Instead of jQuery's `show()` and `hide()` methods, use a `hidden` class (which exists by default in Bootstrap. Or use the `hidden` attribute if only working with modern browsers. [Evidence of jQuery slowness](http://jsperf.com/hidden-vs-hide-vs-class), [support for the hidden attribute](http://caniuse.com/#feat=hidden).
+  - Instead of jQuery's `show()` and `hide()` methods, use a `hidden` class (which exists by default in Bootstrap). Or use the `hidden` attribute if only working with modern browsers. [Evidence of jQuery slowness](http://jsperf.com/hidden-vs-hide-vs-class), [support for the hidden attribute](http://caniuse.com/#feat=hidden).
   
   - You can [create new HTML elements](http://api.jquery.com/jQuery/#jQuery-html-attributes) with jQuery, and doing so can be helpful when you need to attach event handlers to the new element.
   
