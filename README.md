@@ -26,7 +26,9 @@
   1. [Events](#events)
   1. [Modules](#modules)
   1. [jQuery](#jquery)
-  1. [ECMAScript 5 Compatibility](#ecmascript-5-compatibility)
+  1. [HTML Selectors](#html-selectors)
+  1. [Data transfer](#data-transfer)
+  1. [ECMAScript Compatibility](#ecmascript-compatibility)
   1. [Performance](#performance)
   1. [Resources](#resources)
   1. [The JavaScript Style Guide Guide](#the-javascript-style-guide-guide)
@@ -662,7 +664,7 @@
 ## Comments
 
   - Comment prolifically. It will make it easier for others to pick up your work later on. With suitable tooling we can remove comments from production files, so don't worry about file size.
-  
+
   - Use [JSDoc](http://usejsdoc.org/about-getting-started.html) to annotate your functions. This allows for consistent documentation, and will give us the option to automatically generate documentation where possible.
 
   - Use `/** ... */` for multiline comments. Include a description, specify types and values for all parameters and return values.
@@ -814,9 +816,9 @@
 
     return obj;
     ```
-    
+
   - Ensure the indentation of your braces align properly
-  
+
     ```javascript
     // bad
     var obj = {
@@ -824,7 +826,7 @@
        // ...
     }
     }
-    
+
     // good
     var obj = {
       handler: function() {
@@ -1409,14 +1411,14 @@
     ```
 
   - Instead of jQuery's `show()` and `hide()` methods, use a `hidden` class (which exists by default in Bootstrap). Or use the `hidden` attribute if only working with modern browsers. [Evidence of jQuery slowness](http://jsperf.com/hidden-vs-hide-vs-class), [support for the hidden attribute](http://caniuse.com/#feat=hidden).
-  
+
   - You can [create new HTML elements](http://api.jquery.com/jQuery/#jQuery-html-attributes) with jQuery, and doing so can be helpful when you need to attach event handlers to the new element.
-  
+
     ```javascript
     // Creates a new div element with class, a data attribute and an event handler
     var $item = $('<div></div>', {
       'class': 'box1',
-      'data-gbp-value': '£30',
+      'data-uoe-gbp-value': '£30',
       on: {
         click: function() {
           // ...
@@ -1429,9 +1431,55 @@
 **[^ back to top](#table-of-contents)**
 
 
-## ECMAScript 5 Compatibility
+## HTML Selectors
 
-  - Refer to [Kangax](https://twitter.com/kangax/)'s ES5 [compatibility table](http://kangax.github.com/es5-compat-table/).
+  - Because SITS controls ID and Class attributes, use `data-uoe-id` attributes to identify elements in the HTML source.
+    - Note that, unlike ID, `data-uoe-id` is not unique. Multiple elements may use the same identifier.
+  - For any additional parameters attached to the element at page generation, use additional `data-uoe-*` parameters.
+
+    ```javascript
+    <progress data-uoe-id="programme-progress" data-uoe-type="programme" value="15"></progress>
+    <progress data-uoe-id="programme-progress" data-uoe-type="course" value="30"></progress>
+    <progress data-uoe-id="programme-progress" data-uoe-type="course" value="0"></progress>
+    ```
+
+**[^ back to top](#table-of-contents)**
+
+
+## Data transfer
+
+  - To pass data to JavaScript from the HTML, use a meta tag for single-line contents and a script tag for multi-line. This means you don't need to output any JavaScript code on the page directly.
+  - If using meta tags, use the `contents` attribute (other attributes are invalid HTML) and prefix them with "uoe". Using other names may interfere with other page properties, as they direct browsers and search engines.
+  - If using a script tag, give it a suitable `type` attribute. JSON should use `type="application/json"`, HTML content should use `type="text/html"`.
+
+  ```html
+  // good
+  <meta name="uoe_course_code" contents="UNST01040" />
+
+  // good
+  <script type="application/json" data-uoe-id="course_details">{"code": "UNST01040", "name": "Rocks and strata", ...}</script>
+
+  // bad
+  <script>
+  window.course_code = "UNST01040";
+  </script>
+  ```
+
+  - Within your JavaScript file, you can then pull the contents of the HTML elements into local variables.
+
+  ```javascript
+  function registerCourse() {
+    var course_code = uoe.$('meta[name="uoe_course_code"]').attr('contents');
+    // ...
+  }
+  ```
+
+**[^ back to top](#table-of-contents)**
+
+
+## ECMAScript Compatibility
+
+  - Refer to [Kangax](https://twitter.com/kangax/)'s [ES5 compatibility table](http://kangax.github.io/compat-table/es5/) and [ES6 compatibility table](http://kangax.github.io/compat-table/es6/).
 
 **[^ back to top](#table-of-contents)**
 
