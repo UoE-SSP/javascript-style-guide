@@ -1449,12 +1449,12 @@
 ## Data transfer
 
   - To pass data to JavaScript from the HTML, use a meta tag for single-line contents and a script tag for multi-line. This means you don't need to output any JavaScript code on the page directly.
-  - If using meta tags, use the `contents` attribute (other attributes are invalid HTML) and prefix them with "uoe". Using other names may interfere with other page properties, as they direct browsers and search engines.
+  - If using meta tags, use the `content` attribute (other attributes are invalid HTML) and prefix them with "uoe". Using other names may interfere with other page properties, as they direct browsers and search engines.
   - If using a script tag, give it a suitable `type` attribute. JSON should use `type="application/json"`, HTML content should use `type="text/html"`.
 
   ```html
   // good
-  <meta name="uoe_course_code" contents="UNST01040" />
+  <meta name="uoe_course_code" content="UNST01040" />
 
   // good
   <script type="application/json" data-uoe-id="course_details">{"code": "UNST01040", "name": "Rocks and strata", ...}</script>
@@ -1469,7 +1469,7 @@
 
   ```javascript
   function registerCourse() {
-    var course_code = uoe.$('meta[name="uoe_course_code"]').attr('contents');
+    var course_code = uoe.$('meta[name="uoe_course_code"]').attr('content');
     // ...
   }
   ```
