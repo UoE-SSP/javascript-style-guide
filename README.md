@@ -316,7 +316,7 @@
 
 ## Properties
 
-  - Use dot notation when accessing properties.
+  - Where possible, use dot notation when accessing properties.
 
     ```javascript
     var luke = {
@@ -1292,7 +1292,7 @@
 
 ## Events
 
-  - When attaching data payloads to events (whether DOM events or something more proprietary like Backbone events), pass a hash instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
+  - When attaching data payloads to events, pass an object instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
 
     ```js
     // bad
@@ -1323,7 +1323,6 @@
 
 ## Modules
 
-  - The module should start with a `!`. This ensures that if a malformed module forgets to include a final semicolon there aren't errors in production when the scripts get concatenated. [Explanation](https://github.com/airbnb/javascript/issues/44#issuecomment-13063933)
   - Always declare `'use strict';` at the top of the module.
 
     ```javascript
@@ -1368,7 +1367,7 @@
     ```javascript
     // bad
     function setSidebar() {
-      $('.sidebar').hide();
+      $('.sidebar').addClass('beam-truncated');
 
       // ...stuff...
 
@@ -1380,7 +1379,7 @@
     // good
     function setSidebar() {
       var $sidebar = $('.sidebar');
-      $sidebar.hide();
+      $sidebar.addClass('beam-truncated');
 
       // ...stuff...
 
@@ -1410,7 +1409,17 @@
     $sidebar.find('ul').html();
     ```
 
-  - Instead of jQuery's `show()` and `hide()` methods, use a `hidden` class (which exists by default in Bootstrap). Or use the `hidden` attribute if only working with modern browsers. [Evidence of jQuery slowness](http://jsperf.com/hidden-vs-hide-vs-class), [support for the hidden attribute](http://caniuse.com/#feat=hidden).
+  - Instead of jQuery's `show()` and `hide()` methods, set the `hidden` attribute via jQuery's `prop` method. This is because[the show/hide methods are very slow](http://jsperf.com/hidden-vs-hide-vs-class). The `hidden` attribute is supported natively in all modern browsers except IE <= 10, but is shimmed by CSS in Bootstrap which, since 9.1.0 is consistent across e:Vision.
+
+    ```javascript
+    // bad
+    $cell.hide();
+    $warning.show();
+
+    // good
+    $cell.prop('hidden', true);
+    $warning.prop('hidden', false);
+    ```
 
   - You can [create new HTML elements](http://api.jquery.com/jQuery/#jQuery-html-attributes) with jQuery, and doing so can be helpful when you need to attach event handlers to the new element.
 
@@ -1418,14 +1427,13 @@
     // Creates a new div element with class, a data attribute and an event handler
     var $item = $('<div></div>', {
       'class': 'box1',
-      'data-uoe-gbp-value': '£30',
-      on: {
-        click: function() {
-          // ...
-        }
-      }
+      'html': 'This costs £30',
+      'data-uoe-gbp-value': '£30'
+    }).on('click', function() {
+      // do stuff on click
     });
-    $item.appendTo( 'body' );
+
+    $('body').append($item);
     ```
 
 **[^ back to top](#table-of-contents)**
@@ -1437,7 +1445,7 @@
     - Note that, unlike ID, `data-uoe-id` is not unique. Multiple elements may use the same identifier.
   - For any additional parameters attached to the element at page generation, use additional `data-uoe-*` parameters.
 
-    ```javascript
+    ```html
     <progress data-uoe-id="programme-progress" data-uoe-type="programme" value="15"></progress>
     <progress data-uoe-id="programme-progress" data-uoe-type="course" value="30"></progress>
     <progress data-uoe-id="programme-progress" data-uoe-type="course" value="0"></progress>
@@ -1470,6 +1478,7 @@
   ```javascript
   function registerCourse() {
     var course_code = uoe.$('meta[name="uoe_course_code"]').attr('content');
+    var course_details = JSON.parse(uoe.$('[data-uoe-id="course_details"]').html());
     // ...
   }
   ```
