@@ -1,0 +1,63 @@
+{
+  "env": {
+    "browser": true,
+    "jquery": true
+  },
+  "globals": {
+    "uoe": true
+  },
+  "rules": {
+    "eqeqeq": "error",
+    "no-unused-vars": 2,
+    "no-undef": "error",
+    "space-before-function-paren": [2, "never"],
+    "no-empty": "error",
+    "array-bracket-spacing": [2, "never", {
+      "singleValue": false
+    }],
+    "space-in-parens": [2, "never"],
+    "quote-props": [2, "as-needed"],
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }],
+    "space-unary-ops": [2, {
+      "words": false,
+      "nonwords": false
+    }],
+    "no-mixed-spaces-and-tabs": 2,
+    "no-trailing-spaces": 2,
+    "comma-dangle": [2, "never"],
+    "yoda": [2, "never"],
+    "no-with": 2,
+    "no-multiple-empty-lines": ["error", {"max": 1}],
+    "no-use-before-define": 2,
+    "one-var": [2, "never"],
+    "space-before-blocks": [2, "always"],
+    "comma-style": [2, "last"],
+    "space-infix-ops": 2,
+    "camelcase": [2, {
+      "properties": "always"
+    }],
+    "eol-last": 2,
+    "new-cap": 2,
+    "dot-notation": 2,
+    "curly": [2, "multi-line"],
+    "consistent-this": [2, "_this"],
+    "linebreak-style": [2, "unix"],
+    "quotes": [2, "single"],
+    "no-irregular-whitespace": "error",
+    "keyword-spacing": "error",
+    "block-scoped-var": "error",
+    "semi": "error",
+    "valid-typeof": "error",
+    "no-multi-str": "error",
+
+    "require-jsdoc": "warn",
+    "no-invalid-this": "warn",
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  }
+}
