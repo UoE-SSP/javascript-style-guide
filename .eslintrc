@@ -47,10 +47,13 @@
     "linebreak-style": [2, "unix"],
     "quotes": [2, "single"],
     "no-irregular-whitespace": "error",
-    "keyword-spacing": ["error"],
+    "keyword-spacing": "error",
     "block-scoped-var": "error",
     "semi": "error",
+    "valid-typeof": "error",
+    "no-multi-str": "error",
 
+    "require-jsdoc": "warn",
     "no-invalid-this": "warn",
   },
   "parserOptions": {
