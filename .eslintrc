@@ -1,10 +1,10 @@
 {
   "env": {
-    "browser": true,
-    "jquery": true
+    "browser": true
   },
   "globals": {
-    "uoe": true
+    "uoe": true,
+    "Handlebars": true
   },
   "rules": {
     "eqeqeq": "error",
