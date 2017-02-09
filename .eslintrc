@@ -52,6 +52,7 @@
     "semi": "error",
     "valid-typeof": "error",
     "no-multi-str": "error",
+    "no-restricted-globals": ["error", "event"],
 
     "require-jsdoc": "warn",
     "no-invalid-this": "warn",
